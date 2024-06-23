@@ -1,0 +1,26 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+metadata:
+  name: nodejs-skaffold-app
+build:
+  artifacts:
+  - image: nodejs-app
+    context: .
+    docker:
+      dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/deployment.yaml
+    - k8s/service.yaml
+deploy:
+  kubectl: {}
+profiles:
+  - name: dev
+    build:
+      tagPolicy:
+        sha256: {}
+  - name: prod
+    build:
+      tagPolicy:
+        sha256: {}
+        
